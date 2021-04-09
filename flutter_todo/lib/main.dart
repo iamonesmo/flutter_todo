@@ -83,7 +83,7 @@ class TodoListState extends State<TodoList> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: new AppBar(title: new Text('Todo List')),
+      appBar: new AppBar(title: new Text('Do Boi')),
       body: _buildTodoList(),
       floatingActionButton: new FloatingActionButton(
           onPressed:
