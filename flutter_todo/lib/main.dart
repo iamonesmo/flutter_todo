@@ -42,12 +42,12 @@ class TodoListState extends State<TodoList> {
           return new AlertDialog(
               title: new Text('Mark "${_todoItems[index]}" as done?'),
               actions: <Widget>[
-                new FlatButton(
+                new TextButton(
                     child: new Text('CANCEL'),
                     // The alert is actually part of the navigation stack, so to close it, we
                     // need to pop it.
                     onPressed: () => Navigator.of(context).pop()),
-                new FlatButton(
+                new TextButton(
                     child: new Text('MARK AS DONE'),
                     onPressed: () {
                       _removeTodoItem(index);
