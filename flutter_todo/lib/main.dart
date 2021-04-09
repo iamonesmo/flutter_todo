@@ -19,18 +19,20 @@ class TodoListState extends State<TodoList> {
   List<String> _todoItems = [];
 
   //this will be called each time the app button is pressed
-  void _addTodoItem() {
-    //Putting the item inside "setState" tell the app that our state has changed,
-    //and it will automatically re-render the list
-    setState(() {
-      int index = _todoItems.length;
-      _todoItems.add('Item' + index.toString());
-    });
+  //Instead of autogenerating a todo item, _addTodoItem now accepts a string
+
+  void _addTodoItem(String task) {
+    //Only add the task if the user actually entered something
+
+    if (task.length > 0) {
+      setState(() => _todoItems.add(task));
+    }
   }
 
   //Build the whole list of todo items
   Widget _buildTodoList() {
     return new ListView.builder(
+      // ignore: missing_return
       itemBuilder: (context, index) {
         //itemBuilder will be automatically called asm many times as it takes for
         //the list to fill up its available space, which is most likely more than
@@ -53,9 +55,29 @@ class TodoListState extends State<TodoList> {
       appBar: new AppBar(title: new Text('Todo List')),
       body: _buildTodoList(),
       floatingActionButton: new FloatingActionButton(
-          onPressed: _addTodoItem,
+          onPressed:
+              _pushAddTodoScreen, //pressing this buttons now opens a new screeen
           tooltip: 'Add task',
           child: new Icon(Icons.add)),
     );
+  }
+
+  void _pushAddTodoScreen() {
+    //push this page onto the stack
+
+    Navigator.of(context).push(new MaterialPageRoute(builder: (context) {
+      return new Scaffold(
+          appBar: new AppBar(title: new Text('Add a new task')),
+          body: new TextField(
+            autofocus: true,
+            onSubmitted: (val) {
+              _addTodoItem(val);
+              Navigator.pop(context); //close the add todo screen
+            },
+            decoration: new InputDecoration(
+                hintText: 'Enter something to do...',
+                contentPadding: const EdgeInsets.all(16.0)),
+          ));
+    }));
   }
 }
